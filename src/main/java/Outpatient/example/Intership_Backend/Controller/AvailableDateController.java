@@ -15,14 +15,13 @@ public class AvailableDateController {
     @Autowired
     private AvailableDateService availableDateService;
 
-    // Get availability by doctor
     @GetMapping("/availability")
     public ResponseEntity<AvailableDate> getAvailabilityByDoctor() {
         AvailableDate availableDate = availableDateService.getAvailabilityByDoctor();
         if (availableDate != null) {
-            return ResponseEntity.ok(availableDate);  // HTTP 200 OK
+            return ResponseEntity.ok(availableDate);
         } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();  // HTTP 404 Not Found if no availability
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
     }
 
@@ -31,9 +30,9 @@ public class AvailableDateController {
     public ResponseEntity<AvailableDate> updateAvailability(@RequestBody AvailableDate availableDate) {
         try {
             AvailableDate updatedAvailability = availableDateService.updateAvailability(availableDate);
-            return ResponseEntity.ok(updatedAvailability);  // HTTP 200 OK
+            return ResponseEntity.ok(updatedAvailability);
         } catch (RuntimeException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();  // HTTP 400 Bad Request in case of errors
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
     }
 }

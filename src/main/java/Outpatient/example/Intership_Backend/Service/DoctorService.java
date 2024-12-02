@@ -5,6 +5,7 @@ import Outpatient.example.Intership_Backend.DTO.LoginRequest;
 import Outpatient.example.Intership_Backend.DTO.RegisterUserDTo;
 import Outpatient.example.Intership_Backend.Entity.Doctor;
 import Outpatient.example.Intership_Backend.Repository.DoctorRepository;
+
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -21,8 +23,7 @@ public class DoctorService {
 
     @Autowired
     private DoctorRepository doctorRepository;
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+
 
 
     String registerEmail;
@@ -46,8 +47,7 @@ public class DoctorService {
     public ResponseEntity<ApiError> updateDoctorProfile(Doctor doctorDTO) {
 
         System.out.println(loginEmail);
-        Doctor existingDoctor = doctorRepository.findByEmail(loginEmail)
-                .orElseThrow(()-> new RuntimeException("DOCTOR NOT FOUND"));
+        Doctor existingDoctor = doctorRepository.findByEmail(loginEmail);
 
         if (existingDoctor == null) {
             ApiError errorResponse = ApiError.builder()
@@ -65,10 +65,9 @@ public class DoctorService {
         existingDoctor.setHospitalName(doctorDTO.getHospitalName());
         existingDoctor.setChargedPerVisit(doctorDTO.getChargedPerVisit());
 
-        // Save the updated doctor
         doctorRepository.save(existingDoctor);
 
-        // Return success response
+
         ApiError successResponse = ApiError.builder()
                 .status(HttpStatus.OK)
                 .message("Doctor profile updated successfully")
@@ -88,41 +87,12 @@ public class DoctorService {
 
 
     public Doctor getDoctorProfile() {
-        return doctorRepository.findByEmail(loginEmail)
-                .orElse(null); // Return null if doctor is not found
+        return doctorRepository.findByEmail(loginEmail);
     }
 
     public List<Doctor> getAllDoctors() {
         return doctorRepository.findAll();
     }
-
-
-//    public ResponseEntity<ApiError> getAllDoctors() {
-//        List<Doctor> doctors = doctorRepository.findAll();
-//        if (!doctors.isEmpty()) {
-//            return ResponseEntity.ok(
-//                    ApiError.builder()
-//                            .status(HttpStatus.OK)
-//                            .message("Doctors fetched successfully")
-//                            .subErrors(doctors.stream().map(Doctor::toString).toList())
-//                            .build()
-//            );
-//        } else {
-//            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
-//                    ApiError.builder()
-//                            .status(HttpStatus.NOT_FOUND)
-//                            .message("No doctors found")
-//                            .build()
-//            );
-//        }
-//}
-
-
-
-
-
-
-
 
 
 

@@ -21,7 +21,6 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-
 public class UserService implements UserDetailsService {
 
     @Autowired
@@ -32,6 +31,9 @@ public class UserService implements UserDetailsService {
 
     @Autowired
     private DoctorService doctorService;
+
+    @Autowired
+    private  PatientService patientService;
 
 
     public void loadUsers() {
@@ -61,13 +63,19 @@ public class UserService implements UserDetailsService {
             return new ResponseEntity<>(apiError, HttpStatus.BAD_REQUEST);
         }
 
-        doctorService.createDoctor(userDto);
+
 
         User user = new User();
         user.setUsername(userDto.getUsername());
         user.setPassword(passwordEncoder.encode(userDto.getPassword()));
         user.setRole(userDto.getRole());
         user.setEmail(userDto.getEmail());
+        if(userDto.getRole().equals("DOCTOR")){
+            doctorService.createDoctor(userDto);
+        }else{
+            patientService.createPatient(userDto);
+        }
+
 
         userRepo.save(user);
 
@@ -140,6 +148,7 @@ public class UserService implements UserDetailsService {
                         .message("Doctor login successful")
                         .build();
             case "USER":
+                patientService.loginPatient(loginRequest);
                 return ApiError.builder()
                         .status(HttpStatus.OK)
                         .message("User login successful")

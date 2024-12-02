@@ -36,15 +36,9 @@ public class SecurityConfig {
                         authorizeRequests
 
                                 .requestMatchers("/api/auth/**").permitAll()
-                                .requestMatchers("/api/doctor/**","/api/doctor/availability/**").permitAll() // Use 'hasAuthority' to skip the 'ROLE_' prefix
-                                .anyRequest().authenticated())
-                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .logout(logout -> logout
-                        .logoutUrl("/logout")
-                        .logoutSuccessUrl("/api/auth/login?logout=true") // Redirect to login page after logout
-                        .invalidateHttpSession(true)
-                        .deleteCookies("JSESSIONID")
-                );
+                                .requestMatchers("/api/doctor/**","/api/patient/**","/appointments/**","/**").permitAll()
+                                .anyRequest().authenticated());
+
         return http.build();
 
     }

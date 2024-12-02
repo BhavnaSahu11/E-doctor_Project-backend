@@ -3,37 +3,36 @@ package Outpatient.example.Intership_Backend.Controller;
 
 import Outpatient.example.Intership_Backend.Advices.ApiError;
 import Outpatient.example.Intership_Backend.Entity.Doctor;
-import Outpatient.example.Intership_Backend.Service.DoctorService;
+import Outpatient.example.Intership_Backend.Entity.Patient;
+import Outpatient.example.Intership_Backend.Service.PatientService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api/doctor/")
-public class DoctorController {
+@RequestMapping("/api/patient")
+public class PatientController {
 
     @Autowired
-    private DoctorService doctorService;
-
+    private PatientService patientService;
 
     @GetMapping("/get-welcome-email")
     public ResponseEntity<Map<String, String>> getWelcomeEmail() {
         Map<String, String> response = new HashMap<>();
-        response.put("email", doctorService.getLoginEmail());
+        response.put("email", patientService.getLoginEmail());
         return ResponseEntity.ok(response);
     }
 
 
     @GetMapping("/profile")
-    public ResponseEntity<Doctor> getDoctorProfile() {
-        Doctor doctor = doctorService.getDoctorProfile();
-        if (doctor != null) {
-            return ResponseEntity.ok(doctor);
+    public ResponseEntity<Patient> getDoctorProfile() {
+        Patient patient = patientService.getPatientProfile();
+        if (patient != null) {
+            return ResponseEntity.ok(patient);
         } else {
             return ResponseEntity.status(404).body(null);
         }
@@ -41,19 +40,7 @@ public class DoctorController {
 
 
     @PutMapping("/edit-profile")
-    public ResponseEntity<ApiError> editDoctorProfile(@RequestBody @Valid Doctor doctor) {
-        return doctorService.updateDoctorProfile(doctor);
+    public ResponseEntity<ApiError> editDoctorProfile(@RequestBody @Valid Patient patient) {
+        return patientService.updateDoctorProfile(patient);
     }
-
-
-    @GetMapping("/get-all-doctors")
-    public ResponseEntity<List<Doctor>> getAllDoctors() {
-        List<Doctor> doctors = doctorService.getAllDoctors();
-        return ResponseEntity.ok(doctors);
-    }
-
-
-
-
-
 }
