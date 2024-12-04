@@ -3,8 +3,10 @@ package Outpatient.example.Intership_Backend.Service;
 import Outpatient.example.Intership_Backend.Advices.ApiError;
 import Outpatient.example.Intership_Backend.DTO.LoginRequest;
 import Outpatient.example.Intership_Backend.DTO.RegisterUserDTo;
+import Outpatient.example.Intership_Backend.Entity.Appointment;
 import Outpatient.example.Intership_Backend.Entity.Doctor;
 import Outpatient.example.Intership_Backend.Entity.Patient;
+import Outpatient.example.Intership_Backend.Repository.AppointmentRepository;
 import Outpatient.example.Intership_Backend.Repository.PatientRepository;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +22,9 @@ public class PatientService {
 
     @Autowired
     private PatientRepository patientRepository;
+
+    @Autowired
+    private AppointmentRepository appointmentRepository;
 
     String registerEmail;
     String loginEmail;
@@ -80,4 +85,7 @@ public class PatientService {
         return ResponseEntity.ok(successResponse);
     }
 
+    public List<Appointment> getAppointmentsByPatientEmail() {
+        return appointmentRepository.findByPatientEmail(loginEmail);
+    }
 }

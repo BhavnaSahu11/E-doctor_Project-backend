@@ -17,9 +17,9 @@ public class AvailableDate {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private LocalDate availableFromdate;
+    private LocalDate availableFromDate;
 
-    private LocalDate availableEnddate;
+    private LocalDate availableEndDate;
 
 
     private String amSlotTiming;

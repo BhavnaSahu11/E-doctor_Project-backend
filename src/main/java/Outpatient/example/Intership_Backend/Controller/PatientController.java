@@ -2,6 +2,7 @@ package Outpatient.example.Intership_Backend.Controller;
 
 
 import Outpatient.example.Intership_Backend.Advices.ApiError;
+import Outpatient.example.Intership_Backend.Entity.Appointment;
 import Outpatient.example.Intership_Backend.Entity.Doctor;
 import Outpatient.example.Intership_Backend.Entity.Patient;
 import Outpatient.example.Intership_Backend.Service.PatientService;
@@ -11,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -42,5 +44,10 @@ public class PatientController {
     @PutMapping("/edit-profile")
     public ResponseEntity<ApiError> editDoctorProfile(@RequestBody @Valid Patient patient) {
         return patientService.updateDoctorProfile(patient);
+    }
+
+    @GetMapping("/appointments")
+    public List<Appointment> getAppointmentsByPatientEmail() {
+        return patientService.getAppointmentsByPatientEmail();
     }
 }

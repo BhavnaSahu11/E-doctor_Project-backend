@@ -32,4 +32,8 @@ public class AppointmentController {
         List<Appointment> appointments = appointmentService.getAllAppointments();
         return ResponseEntity.ok(appointments);
     }
+
+
+
+
 }

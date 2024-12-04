@@ -3,7 +3,9 @@ package Outpatient.example.Intership_Backend.Service;
 import Outpatient.example.Intership_Backend.Advices.ApiError;
 import Outpatient.example.Intership_Backend.DTO.LoginRequest;
 import Outpatient.example.Intership_Backend.DTO.RegisterUserDTo;
+import Outpatient.example.Intership_Backend.Entity.Appointment;
 import Outpatient.example.Intership_Backend.Entity.Doctor;
+import Outpatient.example.Intership_Backend.Repository.AppointmentRepository;
 import Outpatient.example.Intership_Backend.Repository.DoctorRepository;
 
 import lombok.Data;
@@ -23,6 +25,9 @@ public class DoctorService {
 
     @Autowired
     private DoctorRepository doctorRepository;
+
+    @Autowired
+      private AppointmentRepository appointmentRepository;
 
 
 
@@ -79,7 +84,7 @@ public class DoctorService {
 
 
 
-    public void LoginDoctor(LoginRequest loginRequest) {
+    public void loginDoctor(LoginRequest loginRequest) {
         loginEmail= loginRequest.getEmail();
 
     }
@@ -95,6 +100,8 @@ public class DoctorService {
     }
 
 
-
+    public List<Appointment> getAppointmentsByDoctorEmail() {
+        return appointmentRepository.findByDoctorEmail(loginEmail);
+    }
 }
 

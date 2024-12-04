@@ -2,6 +2,7 @@ package Outpatient.example.Intership_Backend.Controller;
 
 
 import Outpatient.example.Intership_Backend.Advices.ApiError;
+import Outpatient.example.Intership_Backend.Entity.Appointment;
 import Outpatient.example.Intership_Backend.Entity.Doctor;
 import Outpatient.example.Intership_Backend.Service.DoctorService;
 import jakarta.validation.Valid;
@@ -52,6 +53,11 @@ public class DoctorController {
         return ResponseEntity.ok(doctors);
     }
 
+
+    @GetMapping("/appointments")
+    public List<Appointment> getAppointmentsByDoctorEmail() {
+        return doctorService.getAppointmentsByDoctorEmail();
+    }
 
 
 

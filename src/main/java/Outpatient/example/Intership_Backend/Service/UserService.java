@@ -142,7 +142,7 @@ public class UserService implements UserDetailsService {
                         .message("Admin login successful")
                         .build();
             case "DOCTOR":
-                doctorService.LoginDoctor(loginRequest);
+                doctorService.loginDoctor(loginRequest);
                 return ApiError.builder()
                         .status(HttpStatus.OK)
                         .message("Doctor login successful")

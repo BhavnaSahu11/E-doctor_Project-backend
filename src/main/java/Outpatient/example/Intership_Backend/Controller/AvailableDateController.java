@@ -2,11 +2,14 @@ package Outpatient.example.Intership_Backend.Controller;
 
 
 import Outpatient.example.Intership_Backend.Entity.AvailableDate;
+import Outpatient.example.Intership_Backend.Entity.Doctor;
 import Outpatient.example.Intership_Backend.Service.AvailableDateService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/doctor")
@@ -15,9 +18,10 @@ public class AvailableDateController {
     @Autowired
     private AvailableDateService availableDateService;
 
+
     @GetMapping("/availability")
-    public ResponseEntity<AvailableDate> getAvailabilityByDoctor() {
-        AvailableDate availableDate = availableDateService.getAvailabilityByDoctor();
+    public ResponseEntity<AvailableDate> getAvailabilityByDoctor(@RequestParam String email) {
+        AvailableDate availableDate = availableDateService.getAvailabilityByDoctorEmail(email);
         if (availableDate != null) {
             return ResponseEntity.ok(availableDate);
         } else {
@@ -35,4 +39,8 @@ public class AvailableDateController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
     }
+
+
+
+
 }

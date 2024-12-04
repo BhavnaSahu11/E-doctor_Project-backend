@@ -10,6 +10,8 @@ import Outpatient.example.Intership_Backend.Repository.PatientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Map;
+
 @Service
 public class AvailableDateService {
 
@@ -24,30 +26,40 @@ public class AvailableDateService {
 
 
 
-    public AvailableDate getAvailabilityByDoctor() {
-        return availableDateRepository.findByDoctorEmail(doctorService.getLoginEmail());
-    }
 
+//
 
-
-    public AvailableDate updateAvailability( AvailableDate availableDate) {
-
+    public AvailableDate updateAvailability(AvailableDate availableDate) {
         AvailableDate existingSlot = availableDateRepository.findByDoctorEmail(doctorService.getLoginEmail());
+
         if (existingSlot != null) {
-            existingSlot.setAvailableFromdate(availableDate.getAvailableFromdate());
-            existingSlot.setAvailableEnddate(availableDate.getAvailableEnddate());
+            System.out.println("Updating existing slot: " + existingSlot);
+
+            // Check incoming values
+            System.out.println("Incoming availableFromDate: " + availableDate.getAvailableFromDate());
+            System.out.println("Incoming availableEndDate: " + availableDate.getAvailableEndDate());
+
+            existingSlot.setAvailableFromDate(availableDate.getAvailableFromDate());
+            existingSlot.setAvailableEndDate(availableDate.getAvailableEndDate());
             existingSlot.setAmSlotTiming(availableDate.getAmSlotTiming());
             existingSlot.setPmSlotTiming(availableDate.getPmSlotTiming());
 
-            return availableDateRepository.save(existingSlot);
+            AvailableDate updatedSlot = availableDateRepository.save(existingSlot);
+            System.out.println("Updated slot: " + updatedSlot);
+            return updatedSlot;
         } else {
             Doctor doctor = doctorRepository.findByEmail(doctorService.getLoginEmail());
-
             availableDate.setDoctor(doctor);
             return availableDateRepository.save(availableDate);
         }
 
 
+
+
     }
 
+    public AvailableDate getAvailabilityByDoctorEmail(String email) {
+        return availableDateRepository.findByDoctorEmail(email);
+
+    }
 }
