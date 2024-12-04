@@ -4,7 +4,6 @@ import Outpatient.example.Intership_Backend.Advices.ApiError;
 import Outpatient.example.Intership_Backend.DTO.LoginRequest;
 import Outpatient.example.Intership_Backend.DTO.RegisterUserDTo;
 import Outpatient.example.Intership_Backend.Entity.Appointment;
-import Outpatient.example.Intership_Backend.Entity.Doctor;
 import Outpatient.example.Intership_Backend.Entity.Patient;
 import Outpatient.example.Intership_Backend.Repository.AppointmentRepository;
 import Outpatient.example.Intership_Backend.Repository.PatientRepository;
