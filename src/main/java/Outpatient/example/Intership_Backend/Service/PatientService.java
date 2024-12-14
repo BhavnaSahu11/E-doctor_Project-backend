@@ -1,3 +1,4 @@
+
 package Outpatient.example.Intership_Backend.Service;
 
 import Outpatient.example.Intership_Backend.Advices.ApiError;
@@ -84,7 +85,24 @@ public class PatientService {
         return ResponseEntity.ok(successResponse);
     }
 
+//    public List<Appointment> getAppointmentsByPatientEmail() {
+//        return appointmentRepository.findByPatientEmail(loginEmail);
+//    }
+
+
     public List<Appointment> getAppointmentsByPatientEmail() {
+        if (loginEmail == null || loginEmail.isEmpty()) {
+            throw new IllegalArgumentException("No patient is currently logged in.");
+        }
         return appointmentRepository.findByPatientEmail(loginEmail);
+    }
+
+
+    public boolean cancelAppointment(int appointmentId) {
+        if (appointmentRepository.existsById(appointmentId)) {
+            appointmentRepository.deleteById(appointmentId);
+            return true;
+        }
+        return false;
     }
 }
